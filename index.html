@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #af5c35, #ca1e74);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width:500px;
+            margin: 20px 0;
+        }
+
+        .header {
+            text-align: center;
+            color: rgb(255, 254, 254);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+        }
+
+        .login-form, .customer-management, .customer-list {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .login-form input, .customer-management input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .login-form button, .customer-management button {
+            width: 100%;
+            padding: 10px;
+            background-color: #6a11cb;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover, .customer-management button:hover {
+            background-color: #2575fc;
+        }
+
+        .customer-list h3 {
+            text-align: center;
+            color: #6a11cb;
+        }
+
+        .customer {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .customer p {
+            margin: 0;
+            flex: 1;
+        }
+
+        .customer button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #2575fc;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .customer button:hover {
+            background-color: #6a11cb;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>shop management</h1>
+    </div>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div class="login-form" id="loginForm">
+           <center> <h2>Login</h2></center>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="login()">Login</button>
+        </div>
+
+        <!-- Customer Management Form -->
+        <div class="customer-management" id="customerManagement" style="display:none;">
+            <center><h2>Add New shop</h2></center>
+            <div class="form-group">
+                <input type="text" id="customerName" placeholder="shopName">
+            </div>
+            <div class="form-group">
+                <input type="text" id="customerGender" placeholder="Gender">
+            </div>
+            <div class="form-group">
+                <input type="text" id="customerContact" placeholder="Contact">
+            </div>
+            <button onclick="addCustomer()">Add shop</button>
+        </div>
+
+        <!-- Customer List -->
+        <div class="customer-list" id="customerList" style="display:none;">
+            <h3>shop List</h3>
+           
+        
+                <div class="customer">
+                    <p><strong>Name:</strong> piaza</p>
+                    <p><strong>Gender:</strong> food</p>
+                    <p><strong>Contact:</strong> 123456</p>
+                    <div>
+                        <button onclick="viewCustomer('piza')">View</button>
+                        <button onclick="editCustomer('piza')">Edit</button>
+                        <button onclick="deleteCustomer(this)">Delete</button>
+                    </div>
+                </div>
+                <div class="customer">
+                    <p><strong>Name:</strong> zendo</p>
+                    <p><strong>Gender:</strong> clothes</p>
+                    <p><strong>Contact:</strong> 654321</p>
+                    <div>
+                        <button onclick="viewCustomer('zendo')">View</button>
+                        <button onclick="editCustomer('zendo')">Edit</button>
+                        <button onclick="deleteCustomer(this)">Delete</button>
+                    </div>
+                </div>
+                <div class="customer">
+                    <p><strong>Name:</strong> honda</p>
+                    <p><strong>Gender:</strong> dream</p>
+                    <p><strong>Contact:</strong> 789012</p>
+                    <div>
+                        <button onclick="viewCustomer('honda')">View</button>
+                        <button onclick="editCustomer('honda')">Edit</button>
+                        <button onclick="deleteCustomer(this)">Delete</button>
+                    </div>
+                </div>
+                <div class="customer">
+                    <p><strong>Name:</strong>Sting</p>
+                    <p><strong>Gender:</strong>engry drink </p>
+                    <p><strong>Contact:</strong> 112233</p>
+                    <div>
+                        <button onclick="viewCustomer('sting')">View</button>
+                        <button onclick="editCustomer('sting')">Edit</button>
+                        <button onclick="deleteCustomer(this)">Delete</button>
+                    </div>
+                </div>
+                <div class="customer">
+                    <p><strong>Name:</strong>7-eleven</p>
+                    <p><strong>Gender:</strong> food</p>
+                    <p><strong>Contact:</strong> 445566</p>
+                    <div>
+                        <button onclick="viewCustomer('7-eleven')">View</button>
+                        <button onclick="editCustomer('7-eleven')">Edit</button>
+                        <button onclick="deleteCustomer(this)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+                <!-- Other customers will be added here dynamically -->
+            </div>
+        </div>
+    
+        <script>
+            // Simulate authentication credentials
+            const validUsername = 'group7';
+            const validPassword = '1234';
+    
+            // Login Function
+            function login() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+    
+                if (username === validUsername && password === validPassword) {
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('customerManagement').style.display = 'block';
+                    document.getElementById('customerList').style.display = 'block';
+                } else {
+                    alert('Invalid username or password');
+                }
+            }
+    
+            // Add Customer Function
+            function addCustomer() {
+                const name = document.getElementById('customerName').value;
+                const gender = document.getElementById('customerGender').value;
+                const contact = document.getElementById('customerContact').value;
+                if (name && gender && contact) {
+                const customerList = document.getElementById('customerList');
+                const customerDiv = document.createElement('div');
+                customerDiv.classList.add('customer');
+                customerDiv.innerHTML = `
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Gender:</strong> ${gender}</p>
+                    <p><strong>Contact:</strong> ${contact}</p>
+                    <div>
+                        <button onclick="viewCustomer('${name}')">View</button>
+                        <button onclick="editCustomer('${name}')">Edit</button>
+                        <button onclick="deleteCustomer(this)">Delete</button>
+                    </div>
+                `;
+                customerList.appendChild(customerDiv);
+            } else {
+                alert('Please fill out all fields');
+            }
+        }
+
+        // View Customer Details
+        function viewCustomer(name) {
+            alert(`Viewing details for customer: ${name}`);
+        }
+
+        // Edit Customer Details
+        function editCustomer(name) {
+            const newName = prompt(`Edit name for customer: ${name}`);
+            if (newName) {
+                alert(`Customer ${name} updated to ${newName}`);
+            }
+        }
+
+        // Delete Customer
+        function deleteCustomer(button) {
+            const customerDiv = button.parentElement.parentElement;
+            customerDiv.remove();
+        }
+    </script>
+
+</body>
+</html>
